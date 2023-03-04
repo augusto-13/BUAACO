@@ -1,6 +1,6 @@
 # BUAA-CO-2021
 
-2021年秋季北航计组代码
+2021年秋季北航计算机组成原理课程设计源码 by augusto-13
 
 ## introduction
 
