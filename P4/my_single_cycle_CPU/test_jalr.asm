@@ -1,0 +1,6 @@
+ori	$t1, 0x3014
+jalr	$t1
+lui	$s0, 0xffff
+lui	$s1, 0xffff
+lui	$s2, 0xffff
+lui	$s3, 0xffff

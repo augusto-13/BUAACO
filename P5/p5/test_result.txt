@@ -1,0 +1,96 @@
+ 55@00003000: $ 8 <= 7fff0000
+ 65@00003004: $ 8 <= 7ffffffe
+ 75@00003008: $ 9 <= 7fff0000
+ 85@0000300c: $ 9 <= 7fffffff
+ 95@00003010: $10 <= ffff0000
+105@00003014: $10 <= ffff0001
+115@00003018: $11 <= ffff0000
+125@0000301c: $11 <= ffff0002
+195@00003034: $17 <= 0000ffff
+285@00003058: $20 <= 0000ffff
+335@00003064: $21 <= 0000ffff
+
+
+# $t0 = 0x7fff_fffe ( > 0 ) <s>
+lui	$t0, 0x7fff
+ori	$t0, 0xfffe
+
+# $t1 = 0x7fff_ffff ( > 0 ) <b>
+lui	$t1, 0x7fff
+ori	$t1, 0xffff
+
+# $t2 = 0xffff_0001 ( < 0) <s>
+lui	$t2, 0xffff
+ori	$t2, 0x0001
+
+# $t3 = 0xffff_0002 ( < 0) <b>
+lui	$t3, 0xffff
+ori	$t3, 0x0002
+
+j	if_1
+nop
+
+else_1:
+ori	$s0, 0xffff
+j	if_2
+nop
+
+else_2:
+ori	$s1, 0xffff
+j	if_3
+nop
+
+else_3:
+ori	$s2, 0xffff
+j	if_4
+nop
+
+else_4:
+ori	$s3, 0xffff
+j	if_5
+nop
+
+else_5:
+ori	$s4, 0xffff
+j	if_6
+nop
+
+else_6:
+ori	$s5, 0xffff
+j	none
+nop
+
+if_1:
+bne	$t0, $t0, else_1
+nop
+
+if_2:
+bgtz	$t1, else_2
+nop
+
+if_3:
+bgtz	$t2, else_3
+nop
+
+if_4:
+bltz	$t1, else_4
+nop
+
+if_5:
+bltz	$t2, else_5
+nop
+
+if_6:
+beq	$t1, $t1, else_6
+nop
+
+none:
+nop
+
+BUG_6_1: PC(jalr)
+                  55@00003000: $16 <= 00003018
+                  65@00003004: $31 <= 0000300c
+                  85@00000000: $16 <= 00003018
+                  95@00000004: $31 <= 0000000c
+                 115@00003018: $ 9 <= 0000ffff
+                 145@0000000c: $ 8 <= 0000ffff

@@ -1,0 +1,63 @@
+1.*
+reset状态语句判断MatchReg(initialized_as_1), if == 0, still reset 
+
+2.
+若无特殊说明, other alphabet -> doom, space -> reset
+
+3.*
+异位复位reset
+
+4.**
+reg是否会在always后循环执行是一个致命的问题
+但可以确定的是，reg不可放在always块内赋值
+***
+感觉自己有点小傻
+reg赋值在case语句对应分支中进行不就好了吗！！！！
+***
+
+5.*
+reset       s0  
+b           s1      
+be          s2
+beg         s3
+begi        s4
+begin<++>   s5
+doom<-->    s6
+doom        s7
+e           s8
+en          s9
+end<-->     s10
+doom<++>    s11
+
+6.*
+if space
+if required_alphabet
+else //(other alphabets)
+
+7.*
+reg [31:0] MatchReg 
+reg [11:0] state
+
+状态机代码：
+
+        # https://hifpga.com/fsm/
+        #状态机示例
+        digraph fsm {
+        reset -> reset [label = "space"]
+        reset -> doom [label = "other alphabet"]
+        e -> en [label = "n"]
+        "b" -> "be" [label= "e"]
+        "be" -> "beg" [label= "g"]
+        "beg" -> "begi" [label= "i"]
+        "begi" -> "begin<++>" [label= "n"]
+        en -> "end<-->" [label ="d"]
+        "begin<++>" -> "doom<-->" [label = "alphabet"]
+        "end<-->" -> "doom<++>" [label = "alphabet"]
+        reset -> e [label = "e"]
+        reset -> b [label = "b"]
+        "end<-->" -> reset [label = "space"]
+        "doom<++>" ->  doom [label = alphabet]
+        "doom<-->" ->  doom [label = alphabet]
+        
+        }
+            

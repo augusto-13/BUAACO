@@ -1,0 +1,9 @@
+reset       s0  
+b           s1      e               s7
+be          s2      en              s8
+beg         s3      end<-->         s9
+begi        s4      doom<++>       s10
+begin<++>   s5
+doom<-->    s6
+
+doom       S11
